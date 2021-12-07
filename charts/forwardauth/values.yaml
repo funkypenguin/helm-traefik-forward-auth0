@@ -1,5 +1,12 @@
 replicaCount: 1
 
+# Set any annotations for the _deployment_ here
+# One potential use-case is the configmap.reloader.stakater.com/reload: "homer-config" # Reload the deployment every time the yaml config changes
+deployment:
+  annotations: {}
+    # example:
+    # configmap.reloader.stakater.com/reload: "{{ .Values.existingConfigMap }}" # Reload the deployment every time the configMap changes
+
 image:
   repository: index.docker.io/dniel/forwardauth
   tag: latest

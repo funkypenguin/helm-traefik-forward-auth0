@@ -15,6 +15,10 @@ metadata:
     chart: {{ template "helm.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+{{ if .Values.deployment.annotations -}}
+  annotations:
+{{ toYaml .Values.deployment.annotations | indent 4 }}
+{{ end -}}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -28,6 +32,7 @@ spec:
         release: {{ .Release.Name }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+
     spec:
       containers:
         - name: {{ .Chart.Name }}
